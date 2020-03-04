@@ -115,12 +115,19 @@ class AuditableTest extends AuditingTestCase
     {
         $model = new Article();
 
-        $this->assertArraySubset([
-            'created',
-            'updated',
-            'deleted',
-            'restored',
-        ], $model->getAuditEvents(), true);
+        $auditEvents = $model->getAuditEvents();
+
+        $expectedSubset = [
+          'created',
+          'updated',
+          'deleted',
+          'restored',
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $auditEvents);
+            $this->assertSame($value, $auditEvents[$key]);
+        }
     }
 
     /**
@@ -136,10 +143,17 @@ class AuditableTest extends AuditingTestCase
             'archived',
         ];
 
-        $this->assertArraySubset([
-            'published' => 'getPublishedEventAttributes',
-            'archived',
-        ], $model->getAuditEvents(), true);
+        $auditEvents = $model->getAuditEvents();
+
+        $expectedSubset = [
+          'published' => 'getPublishedEventAttributes',
+          'archived',
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $auditEvents);
+            $this->assertSame($value, $auditEvents[$key]);
+        }
     }
 
     /**
@@ -155,10 +169,17 @@ class AuditableTest extends AuditingTestCase
 
         $model = new Article();
 
-        $this->assertArraySubset([
-            'published' => 'getPublishedEventAttributes',
-            'archived',
-        ], $model->getAuditEvents(), true);
+        $auditEvents = $model->getAuditEvents();
+
+        $expectedSubset = [
+          'published' => 'getPublishedEventAttributes',
+          'archived',
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $auditEvents);
+            $this->assertSame($value, $auditEvents[$key]);
+        }
     }
 
     /**
@@ -399,24 +420,29 @@ class AuditableTest extends AuditingTestCase
 
         $this->assertCount(11, $auditData = $model->toAudit());
 
-        $this->assertArraySubset([
-            'old_values' => [],
-            'new_values' => [
-                'title'        => 'How To Audit Eloquent Models',
-                'content'      => 'First step: install the laravel-auditing package.',
-                'reviewed'     => 1,
-                'published_at' => $now->toDateTimeString(),
-            ],
-            'event'          => 'created',
-            'auditable_id'   => null,
-            'auditable_type' => Article::class,
-            'user_id'        => null,
-            'user_type'      => null,
-            'url'            => 'console',
-            'ip_address'     => '127.0.0.1',
-            'user_agent'     => 'Symfony',
-            'tags'           => null,
-        ], $auditData, true);
+        $expectedSubset = [
+          'old_values' => [],
+          'new_values' => [
+              'title'        => 'How To Audit Eloquent Models',
+              'content'      => 'First step: install the laravel-auditing package.',
+              'published_at' => $now->toDateTimeString(),
+              'reviewed'     => 1,
+          ],
+          'event'          => 'created',
+          'auditable_id'   => null,
+          'auditable_type' => Article::class,
+          'user_id'        => null,
+          'user_type'      => null,
+          'url'            => 'console',
+          'ip_address'     => '127.0.0.1',
+          'user_agent'     => 'Symfony',
+          'tags'           => null,
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $auditData);
+            $this->assertSame($value, $auditData[$key]);
+        }
     }
 
     /**
@@ -458,24 +484,29 @@ class AuditableTest extends AuditingTestCase
 
         $this->assertCount(11, $auditData = $model->toAudit());
 
-        $this->assertArraySubset([
-            'old_values' => [],
-            'new_values' => [
-                'title'        => 'How To Audit Eloquent Models',
-                'content'      => 'First step: install the laravel-auditing package.',
-                'reviewed'     => 1,
-                'published_at' => $now->toDateTimeString(),
-            ],
-            'event'          => 'created',
-            'auditable_id'   => null,
-            'auditable_type' => Article::class,
-            'user_id'        => $id,
-            'user_type'      => $type,
-            'url'            => 'console',
-            'ip_address'     => '127.0.0.1',
-            'user_agent'     => 'Symfony',
-            'tags'           => null,
-        ], $auditData, true);
+        $expectedSubset = [
+          'old_values' => [],
+          'new_values' => [
+              'title'        => 'How To Audit Eloquent Models',
+              'content'      => 'First step: install the laravel-auditing package.',
+              'published_at' => $now->toDateTimeString(),
+              'reviewed'     => 1,
+          ],
+          'event'          => 'created',
+          'auditable_id'   => null,
+          'auditable_type' => Article::class,
+          'user_id'        => $id,
+          'user_type'      => $type,
+          'url'            => 'console',
+          'ip_address'     => '127.0.0.1',
+          'user_agent'     => 'Symfony',
+          'tags'           => null,
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $auditData);
+            $this->assertSame($value, $auditData[$key]);
+        }
     }
 
     /**
@@ -540,22 +571,27 @@ class AuditableTest extends AuditingTestCase
 
         $this->assertCount(11, $auditData = $model->toAudit());
 
-        $this->assertArraySubset([
-            'old_values' => [],
-            'new_values' => [
-                'title'   => 'How To Audit Eloquent Models',
-                'content' => 'First step: install the laravel-auditing package.',
-            ],
-            'event'          => 'created',
-            'auditable_id'   => null,
-            'auditable_type' => Article::class,
-            'user_id'        => null,
-            'user_type'      => null,
-            'url'            => 'console',
-            'ip_address'     => '127.0.0.1',
-            'user_agent'     => 'Symfony',
-            'tags'           => null,
-        ], $auditData, true);
+        $expectedSubset = [
+          'old_values' => [],
+          'new_values' => [
+              'title'   => 'How To Audit Eloquent Models',
+              'content' => 'First step: install the laravel-auditing package.',
+          ],
+          'event'          => 'created',
+          'auditable_id'   => null,
+          'auditable_type' => Article::class,
+          'user_id'        => null,
+          'user_type'      => null,
+          'url'            => 'console',
+          'ip_address'     => '127.0.0.1',
+          'user_agent'     => 'Symfony',
+          'tags'           => null,
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $auditData);
+            $this->assertSame($value, $auditData[$key]);
+        }
     }
 
     /**
@@ -610,20 +646,27 @@ class AuditableTest extends AuditingTestCase
             'reviewed' => Base64Encoder::class,
         ];
 
-        $this->assertArraySubset([
-            'old_values' => [
-                'title'        => 'Ho#################',
-                'content'      => '##A',
-                'published_at' => null,
-                'reviewed'     => 'MA==',
-            ],
-            'new_values' => [
-                'title'        => 'How#########################',
-                'content'      => '############################################kage.',
-                'published_at' => $now->toDateTimeString(),
-                'reviewed'     => 'MQ==',
-            ],
-        ], $model->toAudit(), true);
+        $auditData = $model->toAudit();
+
+        $expectedSubset = [
+          'old_values' => [
+              'title'        => 'Ho#################',
+              'content'      => '##A',
+              'published_at' => null,
+              'reviewed'     => 'MA==',
+          ],
+          'new_values' => [
+              'title'        => 'How#########################',
+              'content'      => '############################################kage.',
+              'published_at' => $now->toDateTimeString(),
+              'reviewed'     => 'MQ==',
+          ],
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $auditData);
+            $this->assertSame($value, $auditData[$key]);
+        }
     }
 
     /**
@@ -654,15 +697,20 @@ class AuditableTest extends AuditingTestCase
 
         $this->assertCount(11, $auditData = $model->toAudit());
 
-        $this->assertArraySubset([
-            'new_values' => [
-                'title'        => 'How To Audit Eloquent Models',
-                'content'      => 'First step: install the laravel-auditing package.',
-                'reviewed'     => 1,
-                'published_at' => '2012-06-14 15:03:00',
-                'slug'         => 'how-to-audit-eloquent-models',
-            ],
-        ], $auditData, true);
+        $expectedSubset = [
+          'new_values' => [
+              'title'        => 'How To Audit Eloquent Models',
+              'content'      => 'First step: install the laravel-auditing package.',
+              'reviewed'     => 1,
+              'published_at' => '2012-06-14 15:03:00',
+              'slug'         => 'how-to-audit-eloquent-models',
+          ],
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $auditData);
+            $this->assertSame($value, $auditData[$key]);
+        }
     }
 
     /**
@@ -673,7 +721,7 @@ class AuditableTest extends AuditingTestCase
     {
         $model = new Article();
 
-        $this->assertArraySubset([], $model->getAuditInclude(), true);
+        $this->assertSame([], $model->getAuditInclude());
     }
 
     /**
@@ -689,10 +737,17 @@ class AuditableTest extends AuditingTestCase
             'content',
         ];
 
-        $this->assertArraySubset([
-            'title',
-            'content',
-        ], $model->getAuditInclude(), true);
+        $auditInclude = $model->getAuditInclude();
+
+        $expectedSubset = [
+          'title',
+          'content',
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $auditInclude);
+            $this->assertSame($value, $auditInclude[$key]);
+        }
     }
 
     /**
@@ -703,7 +758,7 @@ class AuditableTest extends AuditingTestCase
     {
         $model = new Article();
 
-        $this->assertArraySubset([], $model->getAuditExclude(), true);
+        $this->assertSame([], $model->getAuditExclude());
     }
 
     /**
@@ -718,9 +773,16 @@ class AuditableTest extends AuditingTestCase
             'published_at',
         ];
 
-        $this->assertArraySubset([
-            'published_at',
-        ], $model->getAuditExclude(), true);
+        $auditExclude = $model->getAuditExclude();
+
+        $expectedSubset = [
+          'published_at',
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $auditExclude);
+            $this->assertSame($value, $auditExclude[$key]);
+        }
     }
 
     /**
@@ -879,7 +941,7 @@ class AuditableTest extends AuditingTestCase
     {
         $model = new Article();
 
-        $this->assertArraySubset([], $model->generateTags(), true);
+        $this->assertSame([], $model->generateTags());
     }
 
     /**
@@ -898,10 +960,17 @@ class AuditableTest extends AuditingTestCase
             }
         };
 
-        $this->assertArraySubset([
-            'foo',
-            'bar',
-        ], $model->generateTags(), true);
+        $tags = $model->generateTags();
+
+        $expectedSubset = [
+          'foo',
+          'bar',
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $tags);
+            $this->assertSame($value, $tags[$key]);
+        }
     }
 
     /**
@@ -1061,10 +1130,17 @@ class AuditableTest extends AuditingTestCase
                 $e->getMessage()
             );
 
-            $this->assertArraySubset([
-                'subject',
-                'text',
-            ], $e->getIncompatibilities(), true);
+            $incompatibilities = $e->getIncompatibilities();
+
+            $expectedSubset = [
+              'subject',
+              'text',
+            ];
+
+            foreach ($expectedSubset as $key => $value) {
+                $this->assertArrayHasKey($key, $incompatibilities);
+                $this->assertSame($value, $incompatibilities[$key]);
+            }
         }
     }
 

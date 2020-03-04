@@ -31,23 +31,28 @@ class AuditTest extends AuditingTestCase
 
         $this->assertCount(15, $resolvedData = $audit->resolveData());
 
-        $this->assertArraySubset([
-            'audit_id'         => 1,
-            'audit_event'      => 'created',
-            'audit_url'        => 'console',
-            'audit_ip_address' => '127.0.0.1',
-            'audit_user_agent' => 'Symfony',
-            'audit_tags'       => null,
-            'audit_created_at' => $audit->created_at->toDateTimeString(),
-            'audit_updated_at' => $audit->updated_at->toDateTimeString(),
-            'user_id'          => null,
-            'user_type'        => null,
-            'new_title'        => 'How To Audit Eloquent Models',
-            'new_content'      => 'First step: install the laravel-auditing package.',
-            'new_published_at' => $now->toDateTimeString(),
-            'new_reviewed'     => 1,
-            'new_id'           => 1,
-        ], $resolvedData, true);
+        $expectedSubset = [
+          'audit_id'         => 1,
+          'audit_event'      => 'created',
+          'audit_url'        => 'console',
+          'audit_ip_address' => '127.0.0.1',
+          'audit_user_agent' => 'Symfony',
+          'audit_tags'       => null,
+          'audit_created_at' => $audit->created_at->toDateTimeString(),
+          'audit_updated_at' => $audit->updated_at->toDateTimeString(),
+          'user_id'          => null,
+          'user_type'        => null,
+          'new_title'        => 'How To Audit Eloquent Models',
+          'new_content'      => 'First step: install the laravel-auditing package.',
+          'new_published_at' => $now->toDateTimeString(),
+          'new_reviewed'     => 1,
+          'new_id'           => 1,
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $resolvedData);
+            $this->assertSame($value, $resolvedData[$key]);
+        }
     }
 
     /**
@@ -78,29 +83,34 @@ class AuditTest extends AuditingTestCase
 
         $this->assertCount(21, $resolvedData = $audit->resolveData());
 
-        $this->assertArraySubset([
-            'audit_id'         => 2,
-            'audit_event'      => 'created',
-            'audit_url'        => 'console',
-            'audit_ip_address' => '127.0.0.1',
-            'audit_user_agent' => 'Symfony',
-            'audit_tags'       => null,
-            'audit_created_at' => $audit->created_at->toDateTimeString(),
-            'audit_updated_at' => $audit->updated_at->toDateTimeString(),
-            'user_id'          => '1',
-            'user_type'        => User::class,
-            'user_is_admin'    => '1',
-            'user_first_name'  => 'rick',
-            'user_last_name'   => 'Sanchez',
-            'user_email'       => 'rick@wubba-lubba-dub.dub',
-            'user_created_at'  => $user->created_at->toDateTimeString(),
-            'user_updated_at'  => $user->updated_at->toDateTimeString(),
-            'new_title'        => 'How To Audit Eloquent Models',
-            'new_content'      => 'First step: install the laravel-auditing package.',
-            'new_published_at' => $now->toDateTimeString(),
-            'new_reviewed'     => 1,
-            'new_id'           => 1,
-        ], $resolvedData, true);
+        $expectedSubset = [
+          'audit_id'         => 2,
+          'audit_event'      => 'created',
+          'audit_url'        => 'console',
+          'audit_ip_address' => '127.0.0.1',
+          'audit_user_agent' => 'Symfony',
+          'audit_tags'       => null,
+          'audit_created_at' => $audit->created_at->toDateTimeString(),
+          'audit_updated_at' => $audit->updated_at->toDateTimeString(),
+          'user_id'          => '1',
+          'user_type'        => User::class,
+          'user_is_admin'    => '1',
+          'user_first_name'  => 'rick',
+          'user_last_name'   => 'Sanchez',
+          'user_email'       => 'rick@wubba-lubba-dub.dub',
+          'user_created_at'  => $user->created_at->toDateTimeString(),
+          'user_updated_at'  => $user->updated_at->toDateTimeString(),
+          'new_title'        => 'How To Audit Eloquent Models',
+          'new_content'      => 'First step: install the laravel-auditing package.',
+          'new_published_at' => $now->toDateTimeString(),
+          'new_reviewed'     => 1,
+          'new_id'           => 1,
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $resolvedData);
+            $this->assertSame($value, $resolvedData[$key]);
+        }
     }
 
     /**
@@ -159,18 +169,23 @@ class AuditTest extends AuditingTestCase
 
         $this->assertCount(10, $metadata = $audit->getMetadata());
 
-        $this->assertArraySubset([
-            'audit_id'         => 1,
-            'audit_event'      => 'created',
-            'audit_url'        => 'console',
-            'audit_ip_address' => '127.0.0.1',
-            'audit_user_agent' => 'Symfony',
-            'audit_tags'       => null,
-            'audit_created_at' => $audit->created_at->toDateTimeString(),
-            'audit_updated_at' => $audit->updated_at->toDateTimeString(),
-            'user_id'          => null,
-            'user_type'        => null,
-        ], $metadata, true);
+        $expectedSubset = [
+          'audit_id'         => 1,
+          'audit_event'      => 'created',
+          'audit_url'        => 'console',
+          'audit_ip_address' => '127.0.0.1',
+          'audit_user_agent' => 'Symfony',
+          'audit_tags'       => null,
+          'audit_created_at' => $audit->created_at->toDateTimeString(),
+          'audit_updated_at' => $audit->updated_at->toDateTimeString(),
+          'user_id'          => null,
+          'user_type'        => null,
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $metadata);
+            $this->assertSame($value, $metadata[$key]);
+        }
     }
 
     /**
@@ -192,24 +207,29 @@ class AuditTest extends AuditingTestCase
 
         $this->assertCount(16, $metadata = $audit->getMetadata());
 
-        $this->assertArraySubset([
-            'audit_id'         => 2,
-            'audit_event'      => 'created',
-            'audit_url'        => 'console',
-            'audit_ip_address' => '127.0.0.1',
-            'audit_user_agent' => 'Symfony',
-            'audit_tags'       => null,
-            'audit_created_at' => $audit->created_at->toDateTimeString(),
-            'audit_updated_at' => $audit->updated_at->toDateTimeString(),
-            'user_id'          => 1,
-            'user_type'        => User::class,
-            'user_is_admin'    => true,
-            'user_first_name'  => 'Rick',
-            'user_last_name'   => 'Sanchez',
-            'user_email'       => 'rick@wubba-lubba-dub.dub',
-            'user_created_at'  => $user->created_at->toDateTimeString(),
-            'user_updated_at'  => $user->updated_at->toDateTimeString(),
-        ], $metadata, true);
+        $expectedSubset = [
+          'audit_id'         => 2,
+          'audit_event'      => 'created',
+          'audit_url'        => 'console',
+          'audit_ip_address' => '127.0.0.1',
+          'audit_user_agent' => 'Symfony',
+          'audit_tags'       => null,
+          'audit_created_at' => $audit->created_at->toDateTimeString(),
+          'audit_updated_at' => $audit->updated_at->toDateTimeString(),
+          'user_id'          => 1,
+          'user_type'        => User::class,
+          'user_is_admin'    => true,
+          'user_first_name'  => 'Rick',
+          'user_last_name'   => 'Sanchez',
+          'user_email'       => 'rick@wubba-lubba-dub.dub',
+          'user_created_at'  => $user->created_at->toDateTimeString(),
+          'user_updated_at'  => $user->updated_at->toDateTimeString(),
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $metadata);
+            $this->assertSame($value, $metadata[$key]);
+        }
     }
 
     /**
@@ -300,23 +320,28 @@ EOF;
 
         $this->assertCount(5, $modified = $audit->getModified());
 
-        $this->assertArraySubset([
-            'title' => [
-                'new' => 'HOW TO AUDIT ELOQUENT MODELS',
-            ],
-            'content' => [
-                'new' => 'First step: install the laravel-auditing package.',
-            ],
-            'published_at' => [
-                'new' => $now->toDateTimeString(),
-            ],
-            'reviewed' => [
-                'new' => true,
-            ],
-            'id' => [
-                'new' => 1,
-            ],
-        ], $modified, true);
+        $expectedSubset = [
+          'title' => [
+              'new' => 'HOW TO AUDIT ELOQUENT MODELS',
+          ],
+          'content' => [
+              'new' => 'First step: install the laravel-auditing package.',
+          ],
+          'published_at' => [
+              'new' => $now->toDateTimeString(),
+          ],
+          'reviewed' => [
+              'new' => true,
+          ],
+          'id' => [
+              'new' => 1,
+          ],
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $modified);
+            $this->assertSame($value, $modified[$key]);
+        }
     }
 
     /**
@@ -391,20 +416,25 @@ EOF;
 
         $this->assertCount(3, $modified = $audit->getModified());
 
-        $this->assertArraySubset([
-            'title' => [
-                'new' => 'HOW TO AUDIT ELOQUENT MODELS',
-                'old' => 'HOW TO AUDIT MODELS',
-            ],
-            'content' => [
-                'new' => '############################################kage.',
-                'old' => '##A',
-            ],
-            'reviewed' => [
-                'new' => true,
-                'old' => false,
-            ],
-        ], $modified, true);
+        $expectedSubset = [
+          'title' => [
+              'new' => 'HOW TO AUDIT ELOQUENT MODELS',
+              'old' => 'HOW TO AUDIT MODELS',
+          ],
+          'content' => [
+              'new' => '############################################kage.',
+              'old' => '##A',
+          ],
+          'reviewed' => [
+              'new' => true,
+              'old' => false,
+          ],
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $modified);
+            $this->assertSame($value, $modified[$key]);
+        }
     }
 
     /**
@@ -417,12 +447,20 @@ EOF;
             'tags' => 'foo,bar,baz',
         ]);
 
-        $this->assertInternalType('array', $audit->getTags());
-        $this->assertArraySubset([
-            'foo',
-            'bar',
-            'baz',
-        ], $audit->getTags(), true);
+        $this->assertIsArray($audit->getTags());
+
+        $tags = $audit->getTags();
+
+        $expectedSubset = [
+          'foo',
+          'bar',
+          'baz',
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $tags);
+            $this->assertSame($value, $tags[$key]);
+        }
     }
 
     /**
@@ -435,7 +473,7 @@ EOF;
             'tags' => null,
         ]);
 
-        $this->assertInternalType('array', $audit->getTags());
+        $this->assertIsArray($audit->getTags());
         $this->assertEmpty($audit->getTags());
     }
 }

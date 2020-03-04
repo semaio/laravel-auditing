@@ -2,6 +2,7 @@
 
 namespace OwenIt\Auditing\Tests\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -45,5 +46,10 @@ class Article extends Model implements Auditable
     public function getTitleAttribute(string $value): string
     {
         return strtoupper($value);
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

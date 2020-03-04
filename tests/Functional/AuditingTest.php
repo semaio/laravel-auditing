@@ -142,13 +142,18 @@ class AuditingTest extends AuditingTestCase
 
         $this->assertEmpty($audit->old_values);
 
-        $this->assertArraySubset([
+        $expectedSubset = [
             'title'        => 'How To Audit Eloquent Models',
             'content'      => 'N/A',
             'published_at' => null,
             'reviewed'     => 0,
             'id'           => 1,
-        ], $audit->new_values, true);
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $audit->new_values);
+            $this->assertSame($value, $audit->new_values[$key]);
+        }
     }
 
     /**
@@ -177,17 +182,29 @@ class AuditingTest extends AuditingTestCase
 
         $audit = Audit::first();
 
-        $this->assertArraySubset([
-            'content'      => 'N/A',
-            'published_at' => null,
-            'reviewed'     => 0,
-        ], $audit->old_values, true);
 
-        $this->assertArraySubset([
-            'content'      => 'First step: install the laravel-auditing package.',
-            'published_at' => $now->toDateTimeString(),
-            'reviewed'     => 1,
-        ], $audit->new_values, true);
+
+        $expectedSubset = [
+          'content'      => 'N/A',
+          'published_at' => null,
+          'reviewed'     => 0,
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $audit->old_values);
+            $this->assertSame($value, $audit->old_values[$key]);
+        }
+
+        $expectedSubset = [
+          'content'      => 'First step: install the laravel-auditing package.',
+          'published_at' => $now->toDateTimeString(),
+          'reviewed'     => 1,
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $audit->new_values);
+            $this->assertSame($value, $audit->new_values[$key]);
+        }
     }
 
     /**
@@ -210,13 +227,18 @@ class AuditingTest extends AuditingTestCase
 
         $audit = Audit::first();
 
-        $this->assertArraySubset([
-            'title'        => 'How To Audit Eloquent Models',
-            'content'      => 'N/A',
-            'published_at' => null,
-            'reviewed'     => 0,
-            'id'           => 1,
-        ], $audit->old_values, true);
+        $expectedSubset = [
+          'title'        => 'How To Audit Eloquent Models',
+          'content'      => 'N/A',
+          'published_at' => null,
+          'reviewed'     => 0,
+          'id'           => 1,
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $audit->old_values);
+            $this->assertSame($value, $audit->old_values[$key]);
+        }
 
         $this->assertEmpty($audit->new_values);
     }
@@ -244,13 +266,18 @@ class AuditingTest extends AuditingTestCase
 
         $this->assertEmpty($audit->old_values);
 
-        $this->assertArraySubset([
-            'title'        => 'How To Audit Eloquent Models',
-            'content'      => 'N/A',
-            'published_at' => null,
-            'reviewed'     => 0,
-            'id'           => 1,
-        ], $audit->new_values, true);
+        $expectedSubset = [
+          'title'        => 'How To Audit Eloquent Models',
+          'content'      => 'N/A',
+          'published_at' => null,
+          'reviewed'     => 0,
+          'id'           => 1,
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $audit->new_values);
+            $this->assertSame($value, $audit->new_values[$key]);
+        }
     }
 
     /**
@@ -344,13 +371,18 @@ class AuditingTest extends AuditingTestCase
 
         $this->assertEmpty($audit->old_values);
 
-        $this->assertArraySubset([
-            'title'        => 'How To Audit Using The Fallback Driver',
-            'content'      => 'N/A',
-            'published_at' => null,
-            'reviewed'     => 0,
-            'id'           => 1,
-        ], $audit->new_values, true);
+        $expectedSubset = [
+          'title'        => 'How To Audit Using The Fallback Driver',
+          'content'      => 'N/A',
+          'published_at' => null,
+          'reviewed'     => 0,
+          'id'           => 1,
+        ];
+
+        foreach ($expectedSubset as $key => $value) {
+            $this->assertArrayHasKey($key, $audit->new_values);
+            $this->assertSame($value, $audit->new_values[$key]);
+        }
     }
 
     /**

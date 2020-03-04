@@ -16,13 +16,7 @@ class CommandTest extends AuditingTestCase
             $this->app->path()
         );
 
-        $this->assertInstanceOf(
-            \Illuminate\Foundation\Testing\PendingCommand::class,
-            $this->artisan('auditing:audit-driver', [
-                    'name' => 'TestDriver',
-                ]
-            )
-        );
+        $this->artisan('auditing:audit-driver', ['name' => 'TestDriver']);
 
         $this->assertFileExists($driverFilePath);
 

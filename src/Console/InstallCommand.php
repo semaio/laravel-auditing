@@ -3,13 +3,10 @@
 namespace OwenIt\Auditing\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Console\DetectsApplicationNamespace;
 use Illuminate\Support\Str;
 
 class InstallCommand extends Command
 {
-    use DetectsApplicationNamespace;
-
     /**
      * {@inheritdoc}
      */
@@ -43,8 +40,6 @@ class InstallCommand extends Command
      */
     protected function registerAuditingServiceProvider()
     {
-        $namespace = Str::replaceLast('\\', '', $this->getAppNamespace());
-
         $appConfig = file_get_contents(config_path('app.php'));
 
         if (Str::contains($appConfig, 'OwenIt\\Auditing\\AuditingServiceProvider::class')) {
@@ -52,8 +47,8 @@ class InstallCommand extends Command
         }
 
         file_put_contents(config_path('app.php'), str_replace(
-            "{$namespace}\\Providers\EventServiceProvider::class,".PHP_EOL,
-            "{$namespace}\\Providers\EventServiceProvider::class,".PHP_EOL."        OwenIt\Auditing\AuditingServiceProvider::class,".PHP_EOL,
+            "App\\Providers\EventServiceProvider::class,".PHP_EOL,
+            "App\\Providers\EventServiceProvider::class,".PHP_EOL."        OwenIt\Auditing\AuditingServiceProvider::class,".PHP_EOL,
             $appConfig
         ));
     }
